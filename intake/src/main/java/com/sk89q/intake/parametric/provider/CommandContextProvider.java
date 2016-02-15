@@ -36,6 +36,22 @@ import javax.annotation.Nullable;
  */
 public final class CommandContextProvider implements Provider<CommandContext> {
 
+    private final boolean markConsumed;
+
+    public CommandContextProvider() {
+        this(true);
+    }
+
+    /**
+     * Create a new {@link CommandContext} provider.
+     *
+     * @param markConsumed if we should mark the entire argument
+     *     stack as consumed
+     */
+    public CommandContextProvider(boolean markConsumed) {
+        this.markConsumed = markConsumed;
+    }
+
     @Override
     public boolean isProvided() {
         return true;
@@ -46,6 +62,10 @@ public final class CommandContextProvider implements Provider<CommandContext> {
     public CommandContext get(CommandArgs arguments, List<? extends Annotation> modifiers) throws ArgumentException, ProvisionException {
         CommandContext context = arguments.getNamespace().get(CommandContext.class);
         if (context != null) {
+            if (this.markConsumed) {
+                arguments.markConsumed();
+            }
+
             return context;
         } else {
             throw new ProvisionException("CommandContext object not found in Namespace");
