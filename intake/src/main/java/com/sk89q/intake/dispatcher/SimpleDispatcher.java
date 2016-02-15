@@ -159,25 +159,13 @@ public class SimpleDispatcher implements Dispatcher {
             List<String> subParents = ImmutableList.<String>builder().addAll(parentCommands).add(subCommand).build();
             CommandMapping mapping = get(subCommand);
 
+            if (mapping == null && this.defaultMapping != null && subArguments.isEmpty() && subParents.get(subParents.size() - 1).isEmpty()) {
+                mapping = this.defaultMapping;
+            }
+
             if (mapping != null) {
                 try {
                     mapping.getCallable().call(subArguments, namespace, subParents);
-                } catch (AuthorizationException e) {
-                    throw e;
-                } catch (CommandException e) {
-                    throw e;
-                } catch (InvocationCommandException e) {
-                    throw e;
-                } catch (Throwable t) {
-                    throw new InvocationCommandException(t);
-                }
-
-                return true;
-            }
-
-            if (this.defaultMapping != null) {
-                try {
-                    this.defaultMapping.getCallable().call(subArguments, namespace, subParents);
                 } catch (AuthorizationException e) {
                     throw e;
                 } catch (CommandException e) {
