@@ -61,6 +61,20 @@ subprojects {
     build.dependsOn(sourcesJar)
     build.dependsOn(javadocJar)
 
+    uploadArchives {
+        repositories {
+            mavenDeployer {
+                repository(url: 'https://repo.miserable.ninja/content/repositories/releases/') {
+                    authentication(userName: misninRepoUsername, password: misninRepoPassword)
+                }
+
+                snapshotRepository(url: 'https://repo.miserable.ninja/content/repositories/snapshots/') {
+                    authentication(userName: misninRepoUsername, password: misninRepoPassword)
+                }
+            }
+        }
+    }
+
     artifactory {
         contextUrl = "${artifactory_contextUrl}"
         publish {
