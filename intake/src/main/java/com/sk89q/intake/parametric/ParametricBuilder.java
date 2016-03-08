@@ -19,12 +19,14 @@
 
 package com.sk89q.intake.parametric;
 
+import com.google.common.annotations.Beta;
 import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.MoreExecutors;
 import com.sk89q.intake.Command;
 import com.sk89q.intake.CommandCallable;
 import com.sk89q.intake.CommandException;
 import com.sk89q.intake.completion.CommandCompleter;
+import com.sk89q.intake.completion.CompleterRegistry;
 import com.sk89q.intake.completion.NullCompleter;
 import com.sk89q.intake.dispatcher.Dispatcher;
 import com.sk89q.intake.Default;
@@ -52,6 +54,7 @@ public class ParametricBuilder {
     private Authorizer authorizer = new NullAuthorizer();
     private CommandCompleter defaultCompleter = new NullCompleter();
     private CommandExecutor commandExecutor = new CommandExecutorWrapper(MoreExecutors.sameThreadExecutor());
+    private CompleterRegistry completerRegistry = new CompleterRegistry();
 
     public ParametricBuilder(Injector injector) {
         this.injector = injector;
@@ -224,6 +227,26 @@ public class ParametricBuilder {
     public void setDefaultCompleter(CommandCompleter defaultCompleter) {
         checkNotNull(defaultCompleter);
         this.defaultCompleter = defaultCompleter;
+    }
+
+    /**
+     * Get the completer registry.
+     *
+     * @return the completer registry
+     */
+    @Beta
+    public CompleterRegistry getCompleterRegistry() {
+        return this.completerRegistry;
+    }
+
+    /**
+     * Set the completer registry.
+     *
+     * @param registry the completer registry
+     */
+    @Beta
+    public void setCompleterRegistry(CompleterRegistry registry) {
+        this.completerRegistry = checkNotNull(registry, "registry");
     }
 
 }
