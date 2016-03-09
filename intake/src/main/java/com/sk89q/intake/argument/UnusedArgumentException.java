@@ -19,6 +19,11 @@
 
 package com.sk89q.intake.argument;
 
+import com.google.common.base.Joiner;
+import com.google.common.collect.ImmutableList;
+
+import java.util.List;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -26,8 +31,20 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * excess arguments.
  */
 public class UnusedArgumentException extends ArgumentException {
-    
+
+    private static final Joiner JOINER = Joiner.on(" ");
+    private List<String> unconsumedArguments;
     private String unconsumed;
+
+    /**
+     * Create a new instance with the unconsumed argument data.
+     *
+     * @param unconsumed The unconsumed arguments
+     */
+    public UnusedArgumentException(List<String> unconsumed) {
+        this(JOINER.join(checkNotNull(unconsumed, "unconsumed")));
+        this.unconsumedArguments = ImmutableList.copyOf(unconsumed);
+    }
 
     /**
      * Create a new instance with the unconsumed argument data.
@@ -38,6 +55,15 @@ public class UnusedArgumentException extends ArgumentException {
         super("Unconsumed arguments: " + unconsumed);
         checkNotNull(unconsumed);
         this.unconsumed = unconsumed;
+    }
+
+    /**
+     * Get the unconsumed arguments.
+     *
+     * @return The unconsumed arguments
+     */
+    public List<String> getUnconsumedArguments() {
+        return this.unconsumedArguments;
     }
 
     /**

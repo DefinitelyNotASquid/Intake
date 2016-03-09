@@ -187,7 +187,7 @@ public final class ArgumentParser {
         }
 
         if (!unconsumedArguments.isEmpty()) {
-            throw new UnusedArgumentException(Joiner.on(" ").join(unconsumedArguments));
+            throw new UnusedArgumentException(unconsumedArguments);
         }
     }
 

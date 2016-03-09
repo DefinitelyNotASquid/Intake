@@ -69,7 +69,7 @@ public class LegacyCommandsHandler extends AbstractInvokeListener implements Inv
                         }
                     }
 
-                    throw new UnusedArgumentException(Joiner.on(" ").join(unconsumedArguments));
+                    throw new UnusedArgumentException(unconsumedArguments);
                 }
             }
         }
