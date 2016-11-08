@@ -64,12 +64,14 @@ subprojects {
     uploadArchives {
         repositories {
             mavenDeployer {
-                repository(url: 'https://repo.miserable.ninja/content/repositories/releases/') {
-                    authentication(userName: misninRepoUsername, password: misninRepoPassword)
-                }
+                if (project.hasProperty('misninRepoUsername') && project.hasProperty('misninRepoPassword')) {
+                    repository(url: 'https://repo.miserable.ninja/content/repositories/releases/') {
+                        authentication(userName: misninRepoUsername, password: misninRepoPassword)
+                    }
 
-                snapshotRepository(url: 'https://repo.miserable.ninja/content/repositories/snapshots/') {
-                    authentication(userName: misninRepoUsername, password: misninRepoPassword)
+                    snapshotRepository(url: 'https://repo.miserable.ninja/content/repositories/snapshots/') {
+                        authentication(userName: misninRepoUsername, password: misninRepoPassword)
+                    }
                 }
             }
         }
