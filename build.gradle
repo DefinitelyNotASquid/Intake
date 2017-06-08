@@ -7,7 +7,7 @@ buildscript {
 
     configurations.all {
         resolutionStrategy {
-            force 'com.google.guava:guava:18.0'
+            force 'com.google.guava:guava:21.0'
         }
     }
 
@@ -27,7 +27,7 @@ subprojects {
     apply plugin: 'com.jfrog.artifactory-upload'
 
     group = 'com.sk89q.intake'
-    version = '4.2-MISNIN-SNAPSHOT'
+    version = '4.3-SNAPSHOT'
 
     checkstyle.configFile = new File(rootProject.projectDir, "config/checkstyle/checkstyle.xml")
 
